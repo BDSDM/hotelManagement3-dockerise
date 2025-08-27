@@ -1,0 +1,92 @@
+<div class="home-container">
+  <div class="welcome-message">
+    <h2>Bienvenue {{ userName }} sur Homepage!</h2>
+    <p>
+      Nous sommes ravis de vous accueillir sur notre site de réservation
+      d'hôtel. Vous avez la possibilité d'annuler la réservation d'un autre
+      utilisateur.
+    </p>
+  </div>
+
+  <h2>Nos chambres</h2>
+  <div class="rooms-grid">
+    <div class="room-card" *ngFor="let room of rooms">
+      <h3>Chambre {{ room.number }}</h3>
+      <p>Type : {{ room.type }}</p>
+      <p>Prix : {{ room.price }}€ / nuit</p>
+      <p>
+        Statut :
+        <span *ngIf="room.available">Disponible</span>
+        <span *ngIf="!room.available">
+          Réservée par {{ room.bookedBy || "Utilisateur inconnu" }}
+        </span>
+      </p>
+
+      <!-- Affichage de la disponibilité -->
+      <p *ngIf="room.available; else reserved">Disponibilité : ✅ Disponible</p>
+      <div *ngIf="room.imageUrl">
+        <img [src]="room.imageUrl" alt="Room Image" width="150" />
+      </div>
+      <ng-template #reserved>
+        <p>
+          <span>Disponibilité : ❌ Occupée</span>
+          <span
+            ><br />Réservée par
+            {{ room.bookedBy || "Utilisateur inconnu" }}</span
+          >
+        </p>
+      </ng-template>
+
+      <!-- Bouton Réserver si la chambre est disponible -->
+      <button *ngIf="room.available" (click)="openBookingDialog(room)">
+        Réserver
+      </button>
+
+      <!-- Conteneur pour Annuler + Facture sur la même ligne -->
+      <div
+        class="actions-buttons"
+        *ngIf="!room.available && room.bookedBy === userName"
+      >
+        <!-- Bouton Annuler -->
+        <button
+          (click)="cancelBooking(room.bookingId, room.number)"
+          class="cancel-button"
+        >
+          Annuler
+        </button>
+
+        <!-- Bouton Facture avec spinner -->
+        <button
+          class="bill-button"
+          (click)="sendInvoice(room)"
+          [disabled]="
+            sendingInvoiceRoomId === room.id ||
+            sendingInvoiceRoomId === room.number
+          "
+        >
+          <ng-container
+            *ngIf="
+              sendingInvoiceRoomId === room.id ||
+                sendingInvoiceRoomId === room.number;
+              else showFacture
+            "
+          >
+            <mat-spinner diameter="15" strokeWidth="3"></mat-spinner>
+            <span class="sending-text">Envoi...</span>
+          </ng-container>
+
+          <ng-template #showFacture> Facture </ng-template>
+        </button>
+      </div>
+
+      <!-- Sinon, si la chambre est occupée mais réservée par un autre, juste bouton Annuler -->
+      <button
+        *ngIf="!room.available && room.bookedBy !== userName"
+        (click)="cancelBooking(room.bookingId)"
+        class="cancel-button"
+      >
+        Annuler
+      </button>
+    </div>
+  </div>
+</div>

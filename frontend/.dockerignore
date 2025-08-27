@@ -1,0 +1,26 @@
+# Node modules (très lourds)
+
+node_modules
+
+# Dossier de build local
+
+dist
+
+# Git
+
+.git
+.gitignore
+
+# Dockerfile lui-même et README
+
+Dockerfile
+README.md
+
+# Logs
+
+\*.log
+
+# Fichiers système
+
+.DS_Store
+Thumbs.db

@@ -1,0 +1,16 @@
+# Étape 1 : Build Angular
+FROM node:20 AS build
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build -- --configuration production
+
+# Étape 2 : Serveur Nginx pour servir Angular
+FROM nginx:alpine
+COPY --from=build /app/dist/hotel-management-frontend3 /usr/share/nginx/html
+
+# Config Nginx (permet d’appeler le backend via /api)
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+EXPOSE 80

@@ -1,0 +1,50 @@
+/* Conteneur principal */
+.dialog-container {
+  padding: 24px;
+  text-align: center;
+  max-width: 400px;
+}
+
+/* Titre */
+.dialog-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #d32f2f; /* rouge élégant */
+  margin-bottom: 16px;
+}
+
+/* Message */
+.dialog-message {
+  font-size: 1rem;
+  color: #444;
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+
+.dialog-message .highlight {
+  color: #1976d2; /* bleu Material */
+  font-weight: bold;
+}
+
+/* Actions */
+.dialog-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap; /* responsive */
+}
+
+.cancel-btn,
+.delete-btn {
+  flex: 1;
+  min-width: 120px;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 10px 16px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.cancel-btn:hover,
+.delete-btn:hover {
+  transform: scale(1.05);
+}

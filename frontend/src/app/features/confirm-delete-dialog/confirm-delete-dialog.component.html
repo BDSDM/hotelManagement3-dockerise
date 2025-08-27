@@ -1,0 +1,26 @@
+<div class="dialog-container">
+  <h2 class="dialog-title">⚠️ Confirmation</h2>
+  <p class="dialog-message">
+    Êtes-vous sûr de vouloir <strong>supprimer</strong>
+    <span class="highlight">{{ data.itemName }}</span> ?
+  </p>
+
+  <div class="dialog-actions">
+    <button
+      mat-stroked-button
+      color="primary"
+      class="cancel-btn"
+      (click)="onCancel()"
+    >
+      Annuler
+    </button>
+    <button
+      mat-raised-button
+      color="warn"
+      class="delete-btn"
+      (click)="onConfirm()"
+    >
+      Supprimer
+    </button>
+  </div>
+</div>

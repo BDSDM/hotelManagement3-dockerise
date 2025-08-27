@@ -1,0 +1,7 @@
+# Fichiers et dossiers à ignorer
+node_modules/
+target/
+*.log
+*.class
+*.jar
+db_data/

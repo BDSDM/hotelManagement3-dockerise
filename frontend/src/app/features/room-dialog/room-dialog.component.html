@@ -1,0 +1,60 @@
+<h2 mat-dialog-title>
+  {{ data ? "Modifier la chambre" : "Ajouter une chambre" }}
+</h2>
+
+<mat-dialog-content>
+  <form #roomForm="ngForm">
+    <mat-form-field class="full-width">
+      <input
+        matInput
+        type="number"
+        placeholder="Numéro"
+        [(ngModel)]="room.number"
+        name="number"
+        required
+      />
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <input
+        matInput
+        placeholder="Type"
+        [(ngModel)]="room.type"
+        name="type"
+        required
+      />
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <input
+        matInput
+        type="number"
+        placeholder="Prix"
+        [(ngModel)]="room.price"
+        name="price"
+        required
+      />
+    </mat-form-field>
+
+    <!-- Upload d'image -->
+    <div>
+      <input type="file" (change)="onFileSelected($event)" />
+      <div *ngIf="room.imageUrl">
+        <p>Image choisie :</p>
+        <img [src]="room.imageUrl" alt="Room Image" width="150" />
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Annuler</button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="onSave()"
+    [disabled]="!roomForm.form.valid"
+  >
+    {{ data ? "Mettre à jour" : "Ajouter" }}
+  </button>
+</mat-dialog-actions>
