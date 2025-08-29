@@ -5,15 +5,17 @@ services:
     image: mysql:8.0
     container_name: mysql_db
     restart: always
+    env_file:
+      - app.env
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: monHotelManagement3
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
     ports:
       - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p${MYSQL_ROOT_PASSWORD}"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -23,14 +25,15 @@ services:
     image: bdsdmiii/hotel-backend3:latest
     container_name: spring_app
     restart: always
-    env_file: ./app.env
+    env_file:
+      - app.env
     depends_on:
       db:
         condition: service_healthy
     ports:
       - "8080:8080"
     volumes:
-      - backend_uploads:/app/uploads   # 🔹 persistance des images
+      - backend_uploads:/app/uploads
 
   frontend:
     image: bdsdmiii/hotel-frontend3:latest
@@ -43,4 +46,4 @@ services:
 
 volumes:
   db_data:
-  backend_uploads:   # 🔹 volume pour persistance des images
+  backend_uploads:
